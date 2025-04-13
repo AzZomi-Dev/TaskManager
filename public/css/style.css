@@ -1,0 +1,512 @@
+/* Body Styles for Dark Mode */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('https://www.transparenttextures.com/patterns/azulejos.png');
+    background-size: cover;
+    background-position: center;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Navbar Styles */
+nav {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #1e1e1e;
+    padding: 15px 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+nav a {
+    color: #9b59b6;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #e0e0e0;
+}
+
+nav span {
+    color: #fff;
+    font-weight: 500;
+}
+
+nav form {
+    display: inline;
+    margin-left: 20px;
+}
+
+nav .btn {
+    background-color: transparent;
+    border: 1px solid #9b59b6;
+    color: #9b59b6;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+nav .btn:hover {
+    background-color: #9b59b6;
+    color: white;
+}
+
+/* Container Styling */
+.container {
+    width: 100%;
+    max-width: 600px;
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+/* Title Styling */
+.title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #fff;
+    animation: bounceIn 1s forwards;
+}
+
+.theme-toggle {
+    position: absolute;
+    right: 30px;
+    background-color: transparent;
+    color: #9b59b6;
+    border: 2px solid #9b59b6;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+
+}
+
+.theme-toggle:hover {
+    background-color: #9b59b6;
+    color: white;
+}
+
+/* Task Form Styling */
+.task-form {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.task-input {
+    flex: 1;
+    padding: 12px;
+    font-size: 1.2rem;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background-color: #2c2c2c;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.task-input:focus {
+    border-color: #9b59b6;
+}
+
+/* Add Auto-Typing Animation */
+.auto-typing {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+
+
+
+/* Button Styling */
+.task-btn {
+    background-color: #9b59b6;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+}
+
+.task-btn:hover {
+    background-color: #8e44ad;
+}
+
+/* Tasks Section */
+.tasks {
+    margin-top: 20px;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.task-content {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 5px;
+}
+
+.task-text {
+    font-size: 1.1rem;
+    color: #ddd;
+}
+
+.timer {
+    font-size: 0.9rem;
+    margin-left: 10px;
+    color: #bbb;
+}
+
+.completed-time {
+    font-size: 0.9rem;
+    color: #28a745;
+}
+
+.task-actions {
+    display: flex;
+    align-items: center;
+}
+
+.complete-btn, .delete-btn {
+    background-color: transparent;
+    border: none;
+    padding: 6px 12px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: #9b59b6;
+    transition: color 0.3s ease;
+}
+
+.complete-btn:hover, .delete-btn:hover {
+    color: #8e44ad;
+}
+
+.delete-btn {
+    color: #e74c3c;
+}
+
+.delete-btn:hover {
+    color: #c0392b;
+}
+
+/* Animation Keyframes */
+
+/* Add Typing Effect */
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 15ch; /* Adjust based on the length of the word you want to type */
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+}
+
+/* Light Mode Overrides */
+body.light-mode {
+    background-color: #f5f5f5;
+    color: #222;
+    background-image: none;
+}
+
+body.light-mode .container {
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .title {
+    color: #333;
+}
+
+body.light-mode .theme-toggle {
+    color: #3498db;
+    border-color: #3498db;
+}
+
+body.light-mode .theme-toggle:hover {
+    background-color: #3498db;
+    color: white;
+}
+body.light-mode .task-input {
+    background-color: #f0f0f0;
+    color: #222;
+    border: 1px solid #ccc;
+}
+
+body.light-mode .task-input:focus {
+    border-color: #3498db;
+}
+
+body.light-mode .task-btn {
+    background-color: #3498db;
+}
+
+body.light-mode .task-btn:hover {
+    background-color: #2980b9;
+}
+
+body.light-mode .task-item {
+    background-color: #fafafa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .task-text {
+    color: #222;
+}
+
+body.light-mode .timer {
+    color: #555;
+}
+
+body.light-mode .completed-time {
+    color: #27ae60;
+}
+
+body.light-mode .complete-btn {
+    color: #3498db;
+}
+
+body.light-mode .complete-btn:hover {
+    color: #2980b9;
+}
+
+body.light-mode .delete-btn {
+    color: #e74c3c;
+}
+
+body.light-mode .delete-btn:hover {
+    color: #c0392b;
+}
+/* Light Mode Overrides for Navbar */
+
+body.light-mode nav {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode nav a {
+    color: #3498db;
+}
+
+body.light-mode nav a:hover {
+    color: #222;
+}
+
+body.light-mode nav span {
+    color: #222;
+}
+
+body.light-mode nav .btn {
+    border-color: #3498db;
+    color: #3498db;
+}
+
+body.light-mode nav .btn:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+/* Media Queries for Different Screen Sizes */
+
+/* Tablets (portrait) and larger */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        height: 60vh;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .task-input {
+        font-size: 1rem;
+    }
+
+    .task-btn {
+        font-size: 0.9rem;
+        padding: 10px 16px;
+    }
+
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+    }
+
+    .task-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .task-actions {
+        margin-top: 12px;
+    }
+
+    .complete-btn, .delete-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Small Devices (Phones in portrait) */
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 15px;
+        height: 80vh;
+    }
+
+    .task-input {
+        font-size: 0.9rem;
+    }
+
+    .task-btn {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+
+    .task-item {
+        padding: 12px;
+    }
+
+    .task-actions {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .complete-btn, .delete-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Extra small devices (Phones in landscape or small devices) */
+@media (max-width: 375px) {
+    body {
+        font-size: 12px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .task-input {
+        font-size: 0.9rem;
+    }
+
+    .task-btn {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+
+    .theme-toggle{
+        top: 18px;
+        border: 1px solid #9b59b6;
+        border-radius: 8px;
+        padding: 2px 4px;
+        font-weight: bold;
+    }
+    
+    .task-item {
+        padding: 10px;
+    }
+
+    .task-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .complete-btn, .delete-btn {
+        font-size: 0.75rem;
+    }
+}
