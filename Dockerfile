@@ -22,35 +22,45 @@ RUN a2enmod rewrite
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # ----------------------------------------
-# Stage 1: Dependency installation
+# Phase 1: Copy only what's needed for composer install
 # ----------------------------------------
 
-# Copy composer files first for caching
+# Copy composer files for layer caching
 COPY composer.json composer.lock ./
 
-# Copy minimum required Laravel files to allow Composer post-scripts to work
+# Copy minimal files needed by Laravel's post-install scripts
 COPY artisan artisan
 COPY bootstrap ./bootstrap
 COPY config ./config
 COPY routes ./routes
 COPY app ./app
 
-# Install PHP dependencies without dev packages
+# Install dependencies without dev packages
 RUN composer install --no-dev --optimize-autoloader
 
 # ----------------------------------------
-# Stage 2: Application setup
+# Phase 2: Copy the rest of the app (e.g. public, resources, etc.)
 # ----------------------------------------
-
-# Now copy the full application (public, resources, etc.)
 COPY . .
 
-# Set permissions
+# ----------------------------------------
+# Apache & Laravel Specific Configurations
+# ----------------------------------------
+
+# Set Apache DocumentRoot to public folder
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+# Update Apache config and suppress ServerName warning
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
+    && sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
+    && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+# Fix permissions (adjust for your environment if needed)
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage
 
 # Expose port 80
 EXPOSE 80
 
-# Start Apache in the foreground
+# Start Apache in foreground
 CMD ["apache2-foreground"]
