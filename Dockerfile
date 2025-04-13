@@ -21,13 +21,28 @@ RUN a2enmod rewrite
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy only composer files first to optimize Docker caching
+# ----------------------------------------
+# Stage 1: Dependency installation
+# ----------------------------------------
+
+# Copy composer files first for caching
 COPY composer.json composer.lock ./
 
-# ✅ Run composer install
+# Copy minimum required Laravel files to allow Composer post-scripts to work
+COPY artisan artisan
+COPY bootstrap ./bootstrap
+COPY config ./config
+COPY routes ./routes
+COPY app ./app
+
+# Install PHP dependencies without dev packages
 RUN composer install --no-dev --optimize-autoloader
 
-# Copy rest of the application
+# ----------------------------------------
+# Stage 2: Application setup
+# ----------------------------------------
+
+# Now copy the full application (public, resources, etc.)
 COPY . .
 
 # Set permissions
@@ -37,4 +52,5 @@ RUN chown -R www-data:www-data /var/www/html \
 # Expose port 80
 EXPOSE 80
 
+# Start Apache in the foreground
 CMD ["apache2-foreground"]
