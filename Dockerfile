@@ -1,30 +1,40 @@
-# Use an official PHP runtime as a parent image
-FROM php:8.1-fpm
+FROM php:8.2-apache
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /var/www/html
 
-# Install dependencies
-RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev zip git
+# Install system dependencies and PHP extensions
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    libzip-dev \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# Install PHP extensions required for Laravel
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install gd pdo pdo_mysql
+# Enable Apache rewrite module
+RUN a2enmod rewrite
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy the current directory contents into the container
-COPY . .
+# Copy only composer files first to optimize Docker caching
+COPY composer.json composer.lock ./
 
-# Install Laravel dependencies
+# ✅ Run composer install
 RUN composer install --no-dev --optimize-autoloader
 
-# Set the correct permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Copy rest of the application
+COPY . .
 
-# Expose port 9000 to the outside world
-EXPOSE 9000
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage
 
-# Start PHP-FPM server
-CMD ["php-fpm"]
+# Expose port 80
+EXPOSE 80
+
+CMD ["apache2-foreground"]
