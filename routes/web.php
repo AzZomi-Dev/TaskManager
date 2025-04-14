@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\AuthController;
 
-Route::get('/', [TaskController::class, 'index'])->name('tasks.index')->middleware('auth');
+Route::get('/home', [TaskController::class, 'home'])->name('tasks.home')->middleware('auth');
+Route::get('/', [TaskController::class, 'dashboard']);
 
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

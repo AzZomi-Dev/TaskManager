@@ -26,7 +26,7 @@ class AuthController extends Controller
         $user = User::create($validated);
 
         Auth::login($user);
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.home');
     }
     public function login(Request $request){
         $validated = $request->validate([
@@ -35,7 +35,7 @@ class AuthController extends Controller
         ]);
         if (Auth::attempt($validated)){
             $request->session()->regenerate();
-            return redirect()->route('tasks.index');
+            return redirect()->route('tasks.home');
         }
         throw ValidationException::withMessages([
             'credentials' => 'Sorry, incorrect credentials'

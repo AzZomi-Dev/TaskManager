@@ -10,10 +10,15 @@ use Illuminate\Support\Facades\Auth;
 class TaskController extends Controller
 {
     // Show all tasks
-    public function index()
+    public function home()
     {
         $tasks = Task::orderBy('created_at', 'desc')->get();
-        return view('tasks.index', compact('tasks'));
+        return view('tasks.home', compact('tasks'));
+    }
+
+    public function dashboard()
+    {
+        return view('tasks.dashboard');
     }
 
     // Add a new task
@@ -29,7 +34,7 @@ class TaskController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.home');
     }
 
     // Delete a task
@@ -38,7 +43,7 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->delete();
 
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.home');
     }
 
     // Complete task
@@ -47,6 +52,6 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->completed_at = Carbon::now();
         $task->save();
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.home');
     }
 }
