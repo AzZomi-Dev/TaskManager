@@ -27,9 +27,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # ----------------------------------------
 
 # Copy composer files for layer caching
-COPY composer.json composer.lock ./ 
+COPY composer.json composer.lock ./
 
-# Copy Laravel app files (without migrations and .env yet)
+# Copy minimal files needed by Laravel's post-install scripts
 COPY artisan artisan
 COPY bootstrap ./bootstrap
 COPY config ./config
@@ -40,11 +40,8 @@ COPY app ./app
 RUN composer install --no-dev --optimize-autoloader
 
 # ----------------------------------------
-# Phase 2: Copy the rest of the app (e.g. public, resources, migrations, etc.)
+# Phase 2: Copy the rest of the app (e.g. public, resources, etc.)
 # ----------------------------------------
-
-# Copy migrations and other app files (public, resources, storage, etc.)
-COPY database/migrations ./database/migrations
 COPY . .
 
 # ----------------------------------------
@@ -66,5 +63,5 @@ RUN chown -R www-data:www-data /var/www/html \
 # Expose port 80
 EXPOSE 80
 
-# Add migration and start Apache web server
-CMD php artisan migrate --force && apache2-foreground
+# Start Apache in foreground
+CMD ["apache2-foreground"]
