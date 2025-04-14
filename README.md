@@ -5,7 +5,7 @@ A simple, intuitive **task management web app** built with **Laravel**, **Blade*
 ## 🌐 Live Demo
 
 Try the app live on your local server after running it:  
-👉 [http://localhost:8000](http://localhost:8000)
+👉 [taskmanagerplatform.onrender.com](https://taskmanagerplatform.onrender.com/)
 
 ## ⚙️ Features
 
