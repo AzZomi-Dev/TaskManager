@@ -1,48 +1,64 @@
 <x-layout>
-    <form action="{{route('register')}}" method="POST">
-  @csrf
+<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 
-  <h2>Register for an Account</h2>
+  <section class="auth-container">
+    <form action="{{ route('register') }}" method="POST" class="auth-form">
+      @csrf
 
-  <label for="name">Name:</label>
-  <input 
-    type="text"
-    name="name"
-    required
-    value="{{ old('name') }}"
-  >
-  <label for="email">Email:</label>
-  <input 
-    type="email"
-    name="email"
-    required
-    value="{{ old('email') }}"
-  >
+      <h2 class="form-title">Create Your Account</h2>
 
-  <label for="password">Password:</label>
-  <input 
-    type="password"
-    name="password"
-    required
-  >
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          value="{{ old('name') }}" 
+          required 
+        >
+      </div>
 
-  <label for="password_confirmation">Confirm Password:</label>
-  <input 
-    type="password"
-    name="password_confirmation"
-    required
-  >
-  <button type="submit" class="btn mt-4">Register</button>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          value="{{ old('email') }}" 
+          required 
+        >
+      </div>
 
-  <!-- validation errors -->
-  
-  @if($errors->any())
-    <ul class="px-4 py-2 bg-red-100">
-      @foreach($errors->all() as $error)
-        <li class="my-2 text-red-500">{{$error}}</li>
-      @endforeach
-    </ul>
-  @endif
-  
-</form>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          required 
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password_confirmation">Confirm Password</label>
+        <input 
+          type="password" 
+          id="password_confirmation" 
+          name="password_confirmation" 
+          required 
+        >
+      </div>
+
+      <button type="submit" class="btn-primary">Register</button>
+
+      @if ($errors->any())
+        <ul class="error-list">
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      @endif
+
+    </form>
+  </section>
 </x-layout>

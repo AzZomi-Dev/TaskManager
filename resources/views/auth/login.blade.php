@@ -1,35 +1,42 @@
 <x-layout>
-    <form action="{{route('login')}}" method="POST">
-  @csrf
+  <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+  <section class="auth-container">
+    <form action="{{ route('login') }}" method="POST" class="auth-form">
+      @csrf
 
-  <h2>Log In to Your Account</h2>
+      <h2 class="form-title">Log In to Your Account</h2>
 
-  <label for="email">Email:</label>
-  <input 
-    type="email"
-    name="email"
-    required
-    value="{{ old('email') }}"
-  >
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          value="{{ old('email') }}" 
+          required 
+        >
+      </div>
 
-  <label for="password">Password:</label>
-  <input 
-    type="password"
-    name="password"
-    required
-  >
-  
-  <button type="submit" class="btn mt-4">Log in</button>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          required 
+        >
+      </div>
 
-  <!-- validation errors -->
-  
-  @if($errors->any())
-    <ul class="px-4 py-2 bg-red-100">
-      @foreach($errors->all() as $error)
-        <li class="my-2 text-red-500">{{$error}}</li>
-      @endforeach
-    </ul>
-  @endif
+      <button type="submit" class="btn-primary">Log In</button>
 
-</form>
+      @if ($errors->any())
+        <ul class="error-list">
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      @endif
+
+    </form>
+  </section>
 </x-layout>
