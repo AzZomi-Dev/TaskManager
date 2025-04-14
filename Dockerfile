@@ -27,9 +27,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # ----------------------------------------
 
 # Copy composer files for layer caching
-COPY composer.json composer.lock ./
+COPY composer.json composer.lock ./ 
 
-# Copy minimal files needed by Laravel's post-install scripts
+# Copy Laravel app files (without migrations and .env yet)
 COPY artisan artisan
 COPY bootstrap ./bootstrap
 COPY config ./config
@@ -40,8 +40,11 @@ COPY app ./app
 RUN composer install --no-dev --optimize-autoloader
 
 # ----------------------------------------
-# Phase 2: Copy the rest of the app (e.g. public, resources, etc.)
+# Phase 2: Copy the rest of the app (e.g. public, resources, migrations, etc.)
 # ----------------------------------------
+
+# Copy migrations and other app files (public, resources, storage, etc.)
+COPY database/migrations ./database/migrations
 COPY . .
 
 # ----------------------------------------
